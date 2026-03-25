@@ -201,6 +201,60 @@ Password: your_password
 
 如果你在本地使用支持 skills 的 Codex / Claude 环境，可以直接把这份 skill 放进你的技能目录，或者让 AI 读取仓库中的这份 skill 来执行。
 
+### Skill 能做什么
+
+这个 skill 适合下面这类重复工作：
+
+- 在新的 Mac 上接入 `IPRoyal-US`
+- 保留用户现有的 Clash 订阅
+- 单独创建 `Claude-US` 代理组
+- 只让 `Claude / Anthropic` 相关域名走静态美国 IP
+- 让终端遵循本机 Clash 规则
+- 修改完成后自动做验证
+
+### Skill 安装方法
+
+最简单的方法是把这个目录复制到你本地的 skills 目录，例如：
+
+```bash
+mkdir -p ~/.codex/skills
+cp -R skills/claude-us-clash-config ~/.codex/skills/
+```
+
+如果你用的是其他支持 skills 的本地 AI 环境，也可以直接把：
+
+```txt
+skills/claude-us-clash-config/
+```
+
+整个目录拷进去。
+
+### Skill 使用方法
+
+安装好之后，你可以直接对本地 AI 说：
+
+```text
+请使用 claude-us-clash-config 这个 skill，帮我在这台 Mac 上配置 Clash Verge。
+要求保留现有订阅，只让 Claude / Anthropic 走固定美国静态 IP，终端也遵循 Clash 当前规则。
+```
+
+然后把你的参数补上：
+
+```text
+type: socks5
+host: ...
+port: ...
+username: ...
+password: ...
+```
+
+### Skill 和 README 的关系
+
+- `README` 适合人自己照着操作
+- `Skill` 适合你或别人把这项工作交给本地 Codex / Claude 自动执行
+
+如果你经常要在不同电脑上重复配置，优先推荐直接用 skill。
+
 ## Clash Verge 配置方法
 
 ### 推荐思路

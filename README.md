@@ -1,5 +1,7 @@
 # 如何让 Claude 更稳定、更少受 IP 变化影响
 
+![Stable Claude Access Cover](assets/cover.png)
+
 这是一份面向个人用户的实战手册，目标很明确：
 
 - 让 `Claude / Anthropic` 相关流量尽量固定走同一个美国静态 IP
@@ -210,6 +212,13 @@ Password: your_password
 
 这样出问题时，切换也很方便。
 
+### 参考效果图
+
+下面这张图表示配置完成后，`Claude-US` 这个组已经存在，并且当前选择的是 `IPRoyal-US`。  
+这说明 `Claude / Anthropic` 相关流量会优先走你单独配置的静态美国 IP，而不是直接复用原来的通用订阅节点。
+
+![Clash Verge 配置效果](assets/clash-verge-result.png)
+
 ## 只让 Claude / Anthropic 走静态 IP
 
 这是这套方案最关键的部分。
@@ -221,6 +230,11 @@ claude.ai
 anthropic.com
 claudeusercontent.com
 ipinfo.io
+intercomcdn.com
+intercom.io
+intercomassets.com
+sentry.io
+segment.io
 ```
 
 如果你在 Clash Verge 的增强规则文件里维护，规则通常类似：
@@ -231,6 +245,11 @@ prepend:
   - DOMAIN-SUFFIX,claude.ai,Claude-US
   - DOMAIN-SUFFIX,anthropic.com,Claude-US
   - DOMAIN-SUFFIX,claudeusercontent.com,Claude-US
+  - DOMAIN-SUFFIX,intercomcdn.com,Claude-US
+  - DOMAIN-SUFFIX,intercom.io,Claude-US
+  - DOMAIN-SUFFIX,intercomassets.com,Claude-US
+  - DOMAIN-SUFFIX,sentry.io,Claude-US
+  - DOMAIN-SUFFIX,segment.io,Claude-US
 ```
 
 重点是用 `prepend`，而不是 `append`。  
@@ -299,6 +318,11 @@ curl https://ipinfo.io
 - `ipinfo.io` 命中了 `Claude-US`
 - 当前静态 IP 规则生效
 
+下面这张图就是一个终端测试通过的例子：  
+`curl https://ipinfo.io` 返回了美国位置和对应 IP 信息，说明终端已经通过本机 Clash 命中 `Claude-US` 规则。
+
+![终端测试](assets/terminal-ipinfo-us.png)
+
 再测试 Claude 相关域名连通性：
 
 ```bash
@@ -322,6 +346,11 @@ curl -I https://www.anthropic.com
 - `https://www.anthropic.com`
 
 如果这两个能正常访问，而其他普通网站仍按原来规则走，就说明你的分流已经合理了。
+
+下面这张图是浏览器侧验证成功的例子：  
+`ipinfo.io` 显示的是美国位置，说明浏览器侧也已经命中了你为 `Claude-US` 配置的静态美国出口。
+
+![浏览器 IP 测试](assets/ipinfo-browser-us.png)
 
 ## 常见问题与排错
 

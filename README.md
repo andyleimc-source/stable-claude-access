@@ -23,6 +23,7 @@
 - [购买方法](#购买方法)
 - [IPRoyal 参数说明](#iproyal-参数说明)
 - [给 Codex / Claude 的一键配置提示词](#给-codex--claude-的一键配置提示词)
+- [仓库内置 Skill](#仓库内置-skill)
 - [Clash Verge 配置方法](#clash-verge-配置方法)
 - [只让 Claude / Anthropic 走静态 IP](#只让-claude--anthropic-走静态-ip)
 - [终端如何遵循 Clash 规则](#终端如何遵循-clash-规则)
@@ -184,6 +185,21 @@ Password: your_password
 6. 修改后请验证 YAML 合法性。
 7. 不要改动我无关的 shell 配置和业务项目文件。
 ```
+
+## 仓库内置 Skill
+
+如果你需要反复在别人的电脑上做同样的事情，这个仓库已经附带了一个可复用 skill：
+
+- [skills/claude-us-clash-config/SKILL.md](skills/claude-us-clash-config/SKILL.md)
+
+这个 skill 的定位是：
+
+- 不删除现有订阅
+- 给 `Claude / Anthropic` 单独接入固定美国静态 IP
+- 终端只连接本机 Clash，再由 Clash 规则分流
+- 改完后自动验证
+
+如果你在本地使用支持 skills 的 Codex / Claude 环境，可以直接把这份 skill 放进你的技能目录，或者让 AI 读取仓库中的这份 skill 来执行。
 
 ## Clash Verge 配置方法
 
